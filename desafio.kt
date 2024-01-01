@@ -40,7 +40,7 @@ fun main() {
     
     val duracaoTotal = conteudosEducacionais.sumBy { it.duracao }
     
-    val formacao = Formacao("Desenvolvimento Backend com Kotlin",conteudosEducacionais, Nivel.BASICO, conteudosEducacionais.size,30)
+    val formacao = Formacao("Desenvolvimento Backend com Kotlin",conteudosEducacionais, Nivel.BASICO, conteudosEducacionais.size,duracaoTotal)
     
     formacao.matricular(usuario1)
     formacao.matricular(usuario2)
