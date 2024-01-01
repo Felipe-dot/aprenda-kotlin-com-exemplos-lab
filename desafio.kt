@@ -1,21 +1,54 @@
-// [Template no Kotlin Playground](https://pl.kotl.in/WcteahpyN)
-
 enum class Nivel { BASICO, INTERMEDIARIO, DIFICIL }
 
-class Usuario
+data class Usuario(
+	var nome: String,
+    var email: String
+)
 
-data class ConteudoEducacional(var nome: String, val duracao: Int = 60)
+data class ConteudoEducacional(var nome: String, val duracao: Int = 60, val stack: List<String>)
 
-data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>) {
+data class Formacao(val nome: String, var conteudos: List<ConteudoEducacional>, val nivel:Nivel, val totalDeCursos: Int, val duracao: Int) {
 
     val inscritos = mutableListOf<Usuario>()
     
     fun matricular(usuario: Usuario) {
-        TODO("Utilize o parâmetro $usuario para simular uma matrícula (usar a lista de $inscritos).")
+        inscritos.add(usuario)
+        println("${usuario.nome} adicionado a formação")
+    }
+    
+    fun cancelarMatricular(usuario: Usuario) {
+        inscritos.removeIf{it == usuario}
+        println("Usuário removido: ${usuario.nome}")
+    }
+    
+    fun mostrarAlunosMatriculados() {
+        println("Alunos matriculados no curso")
+        inscritos.forEach{ usuario -> println(usuario.nome)}
     }
 }
 
 fun main() {
-    TODO("Analise as classes modeladas para este domínio de aplicação e pense em formas de evoluí-las.")
-    TODO("Simule alguns cenários de teste. Para isso, crie alguns objetos usando as classes em questão.")
+    val usuario1 = Usuario("Lucas", "lucas@gmail.com")
+    val usuario2 = Usuario("Laura", "lauradev@gmail.com")
+    
+    val conteudosEducacionais: List<ConteudoEducacional> = listOf(
+    	ConteudoEducacional("Conhecendo o Kotlin e Sua Documentação Oficial", 1, listOf("kotlin")),
+    	ConteudoEducacional("Introdução Prática à Linguagem de Programação Kotlin", 2,  listOf("kotlin")),
+    	ConteudoEducacional("Estruturas de Controle de Fluxo e Coleções em Kotlin",2, listOf("kotlin")),
+    	ConteudoEducacional("Orientação a Objetos e Tipos de Classes na Prática com Kotlin",2,  listOf("kotlin"))
+    )
+    
+    val duracaoTotal = conteudosEducacionais.sumBy { it.duracao }
+    
+    val formacao = Formacao("Desenvolvimento Backend com Kotlin",conteudosEducacionais, Nivel.BASICO, conteudosEducacionais.size,30)
+    
+    formacao.matricular(usuario1)
+    formacao.matricular(usuario2)
+    
+    formacao.mostrarAlunosMatriculados()
+    
+    formacao.cancelarMatricular(usuario2)
+    
+    formacao.mostrarAlunosMatriculados()
+    
 }
